@@ -54,16 +54,19 @@ export default function Home() {
       const formData = new FormData();
       formData.append("image", selectedImage);
 
-      const response = await axios.post(
-        "http://localhost:8000/remove-background",
-        formData,
-        {
-          responseType: "blob",
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+    const API_URL =
+      process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
+    const response = await axios.post(
+      `${API_URL}/remove-background`,
+      formData,
+      {
+        responseType: "blob",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
       const resultBlob = new Blob([response.data], {
         type: "image/png",
